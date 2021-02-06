@@ -25,7 +25,7 @@
 
 Creates a new property record with the info contained in the request body. 
 
-Success Status Code: `201`
+Success Status Code: `201`  
 
 
 
