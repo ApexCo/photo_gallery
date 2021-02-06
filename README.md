@@ -21,7 +21,7 @@
 
 ## API Documentation
 
-#POST /api/property/
+**POST** `/api/property/`
 Creates a new property record with the info contained in the request body. 
 Success Status Code: `201`
 
