@@ -24,7 +24,7 @@ const generateProperty = () => {
   const property = {
     title: faker.random.words(Math.floor(Math.random()) + 2),
     reviews: Math.floor(Math.random() * (30) + 10),
-    rating: Math.floor(Math.random() * 2) + 4,
+    rating: Math.random() * 2 + 3,
     is_superhost: faker.random.boolean(),
     city: faker.address.city(),
     state: faker.address.state(),
