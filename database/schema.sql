@@ -2,13 +2,13 @@ CREATE TABLE properties (
   id serial,
   title VARCHAR(100) NOT NULL,
   reviews int DEFAULT 0,
-  rating int DEFAULT null,
+  rating real DEFAULT null,
   is_superhost BOOLEAN DEFAULT false,
   city VARCHAR(100) NOT NULL,
   stateLoc VARCHAR(25) NOT NULL,
   country VARCHAR(50) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE photos (
@@ -21,7 +21,7 @@ CREATE TABLE photos (
   is_verified BOOLEAN DEFAULT false,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
+  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );
 
 CREATE TABLE users (
@@ -32,23 +32,24 @@ CREATE TABLE users (
   lastname VARCHAR(50) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
+  UNIQUE (username)
 );
 
 CREATE TABLE property_lists (
   id serial,
-  user_id int NOT NULL
+  user_id int NOT NULL,
   title VARCHAR(30) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE property_list_properties (
   id serial,
-  list_id int NOT NULL
-  property_id int NOT NULL
+  list_id int NOT NULL,
+  property_id int NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (list_id) REFERENCES property_lists(id) ON DELETE CASCADE,
-  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
+  FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );

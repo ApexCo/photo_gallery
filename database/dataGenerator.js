@@ -24,7 +24,7 @@ const generateProperty = () => {
   const property = {
     title: faker.random.words(Math.floor(Math.random()) + 2),
     reviews: Math.floor(Math.random() * (30) + 10),
-    rating: Math.random() * 2 + 4,
+    rating: Math.floor(Math.random() * 2) + 4,
     is_superhost: faker.random.boolean(),
     city: faker.address.city(),
     state: faker.address.state(),
@@ -46,7 +46,7 @@ function writeAllPhotos(totalGalleries, writer, encoding = 'utf8', callback) {
       let data = '';
       for (let photo = 0; photo < gallery.length; photo++) {
         let { property_id, photo_name, photo_url, photo_description, is_verified } = gallery[photo];
-        data += `${property_id},${photo_name},${photo_url},${photo_description},${is_verified},\n`;
+        data += `${property_id},${photo_name},${photo_url},${photo_description},${is_verified}\n`;
       }
       if (i === totalGalleries) {
         writer.write(data, encoding, callback);
@@ -77,7 +77,7 @@ function writeAllProperties(totalProperties, writer, encoding = 'utf8', callback
       const property = generateProperty();
       let data = '';
       let { title, reviews, rating, is_superhost, city, state, country } = property;
-      data += `${title},${reviews},${rating.toFixed(2)},${is_superhost},${city},${state},${country},\n`;
+      data += `${title},${reviews},${rating.toFixed(2)},${is_superhost},${city},${state},${country}\n`;
       if (i === totalProperties) {
         writer.write(data, encoding, callback);
       } else {
