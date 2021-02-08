@@ -6,7 +6,7 @@ CREATE TABLE properties (
   is_superhost BOOLEAN DEFAULT false,
   city VARCHAR(100) NOT NULL,
   stateLoc VARCHAR(25) NOT NULL,
-  country VARCHAR(55) NOT NULL,
+  country VARCHAR(55  ) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
@@ -38,7 +38,7 @@ CREATE TABLE users (
 CREATE TABLE property_lists (
   id serial,
   user_id int NOT NULL,
-  title VARCHAR(30) NOT NULL,
+  title VARCHAR(60) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
