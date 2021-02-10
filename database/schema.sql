@@ -6,7 +6,7 @@ CREATE TABLE properties (
   is_superhost BOOLEAN DEFAULT false,
   city VARCHAR(100) NOT NULL,
   stateLoc VARCHAR(25) NOT NULL,
-  country VARCHAR(55  ) NOT NULL,
+  country VARCHAR(60) NOT NULL,
   created_date timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
