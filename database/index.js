@@ -1,38 +1,18 @@
-const mongoose = require('mongoose');
+const { Pool } = require('pg');
 
-const string = process.env.CONNECTIONSTRING;
-const otherstring = 'mongodb://localhost/photogallery';
+// const pool = new Pool({
+//   host: 'localhost',
+//   user: 'adam',
+//   database: 'photo_gallery',
+//   max: 20,
+//   idleTimeoutMillis: 30000,
+//   connectionTimeoutMillis: 2000,
+// });
 
-mongoose.connect(string || otherstring, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const { connection } = mongoose;
-
-const gallerySchema = new mongoose.Schema({
-  _id: Number,
-  title: String,
-  reviews: Number,
-  rating: Number,
-  isSuperhost: Boolean,
-  location: {
-    city: String,
-    state: String,
-    country: String,
-  },
-  gallery: [
-    {
-      _id: Number,
-      photoName: String,
-      photoUrl: String,
-      photoDescription: String,
-      isVerified: Boolean,
-      hasDescription: Boolean,
-    },
-  ],
-});
-
-const Gallery = mongoose.model('Gallery', gallerySchema);
+const db_url = 'postgres://adam:test@localhost:5432/photo_gallery';
+const pool = new Pool({ connectionString: db_url });
 
 module.exports = {
-  Gallery,
-  connection,
+  pool,
+  query: (text, params) => pool.query(text, params),
 };

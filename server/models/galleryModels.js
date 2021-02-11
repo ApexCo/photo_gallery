@@ -1,7 +1,10 @@
-const db = require('../../database/index.js');
+const { pool, query } = require('../../database');
 
 const getGalleryById = (id, cb) => {
-  db.Gallery.find({ _id: id }, (err, docs) => {
+  query(`SELECT *
+  FROM properties
+  LEFT JOIN photos
+  ON photos.property_id = properties.id where properties.id = $1;`, [id], (err, docs) => {
     if (err) {
       cb(err);
     } else {
