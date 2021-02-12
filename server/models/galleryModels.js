@@ -60,6 +60,19 @@ const getPropertyById = (id, cb) => {
   });
 };
 
+const getPhotoById = (id, cb) => {
+  query(`SELECT *
+  FROM photos
+  WHERE id = $1
+  LIMIT 1;`, [id], (err, response) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, [response.rows]);
+    }
+  });
+};
+
 const addProperty = (property, cb) => {
   const keys = Object.keys(property);
   const values = [];
@@ -115,4 +128,5 @@ module.exports = {
   addProperty,
   deleteProperty,
   updateProperty,
+  getPhotoById,
 };

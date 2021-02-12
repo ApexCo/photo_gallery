@@ -56,10 +56,23 @@ const updateProperty = (req, res) => {
   });
 };
 
+const getPhotoById = (req, res) => {
+  const { id } = req.params;
+  models.getPhotoById(id, (err, docs) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   getPropertyById,
   addProperty,
   deleteProperty,
   updateProperty,
+  getPhotoById,
+  addPhoto,
 };

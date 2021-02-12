@@ -16,7 +16,9 @@ app.use('/:id/bundle', express.static(path.join(__dirname, '../client/dist/bundl
 
 app.get('/api/galleries/:id', controllers.getGalleryById);
 app.get('/api/properties/:id', controllers.getPropertyById);
+app.get('/api/photos/:id', controllers.getPhotoById);
 app.post('/api/properties', controllers.addProperty);
+app.post('/api/photos', controllers.addPhoto);
 app.delete('/api/properties/:id', controllers.deleteProperty);
 app.patch('/api/properties/:id', controllers.updateProperty);
 
