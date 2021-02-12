@@ -38,10 +38,7 @@ const getGalleryById = (id, cb) => {
 
 const addProperty = (property, cb) => {
   const keys = Object.keys(property);
-  const numberedKeys = [];
-  keys.forEach((key, i) => {
-    numberedKeys.push(`$${i + 1}`);
-  });
+  const numberedKeys = keys.map((key, i) => `$${i + 1}`);
   query(`INSERT INTO
   properties(${keys.join(', ')})
   VALUES(${numberedKeys.join(', ')})
@@ -66,8 +63,27 @@ const deleteProperty = (id, cb) => {
   });
 };
 
+const updateProperty = (changes, id, cb) => {
+  const values = [id];
+  const keys = Object.entries(changes).map((entry, i) => {
+    values.push(entry[1]);
+    return `${entry[0]} = $${i + 2}`;
+  });
+  query(`UPDATE properties SET
+  ${keys.join(', ')}
+  WHERE id = $1
+  returning *`, values, (err, response) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, response.rows[0]);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   addProperty,
   deleteProperty,
+  updateProperty,
 };

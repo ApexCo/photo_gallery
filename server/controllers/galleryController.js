@@ -33,8 +33,21 @@ const deleteProperty = (req, res) => {
   });
 };
 
+const updateProperty = (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+  models.updateProperty(changes, id, (err, response) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(response);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   addProperty,
   deleteProperty,
+  updateProperty,
 };
