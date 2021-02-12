@@ -38,11 +38,15 @@ const getGalleryById = (id, cb) => {
 
 const addProperty = (property, cb) => {
   const keys = Object.keys(property);
-  const numberedKeys = keys.map((key, i) => `$${i + 1}`);
+  const values = [];
+  const numberedKeys = keys.map((key, i) => {
+    values.push(property[key]);
+    return `$${i + 1}`;
+  });
   query(`INSERT INTO
   properties(${keys.join(', ')})
   VALUES(${numberedKeys.join(', ')})
-  returning *`, Object.values(property), (err, response) => {
+  returning *`, values, (err, response) => {
     if (err) {
       cb(err);
     } else {
