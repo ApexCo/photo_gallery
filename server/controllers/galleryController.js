@@ -24,7 +24,6 @@ const getPropertyById = (req, res) => {
 
 const getPhotoById = (req, res) => {
   const { id } = req.params;
-  console.log(req);
   models.getPhotoById(id, (err, docs) => {
     if (err) {
       res.sendStatus(400);
