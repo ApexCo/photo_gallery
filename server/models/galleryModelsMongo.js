@@ -1,4 +1,4 @@
-const db = require('../../database/index.js');
+const db = require('../../database/indexMongo.js');
 
 const getGalleryById = (id, cb) => {
   db.Gallery.find({ _id: id }, (err, docs) => {

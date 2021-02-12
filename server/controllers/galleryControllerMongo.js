@@ -1,4 +1,4 @@
-const models = require('../models/galleryModels.js');
+const models = require('../models/galleryModelsMongo.js');
 
 const getGalleryById = (req, res) => {
   const { id } = req.params;
