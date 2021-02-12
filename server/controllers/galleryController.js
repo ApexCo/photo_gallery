@@ -22,7 +22,19 @@ const addProperty = (req, res) => {
   });
 };
 
+const deleteProperty = (req, res) => {
+  const { id } = req.params;
+  models.deleteProperty(id, (err) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   addProperty,
+  deleteProperty,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { query } = require('../../database');
 
 const getGalleryById = (id, cb) => {
@@ -53,7 +54,20 @@ const addProperty = (property, cb) => {
   });
 };
 
+const deleteProperty = (id, cb) => {
+  query(`DELETE FROM
+  properties WHERE id=$1;`, [id], (err, response) => {
+    if (err) {
+      console.log(err);
+      cb(err);
+    } else {
+      cb(null, response.rows[0]);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   addProperty,
+  deleteProperty,
 };
