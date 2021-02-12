@@ -5,7 +5,7 @@ const getGalleryById = (id, cb) => {
   query(`SELECT *
   FROM properties
   LEFT JOIN photos
-  ON photos.property_id = properties.id where properties.id = $1;`, [id], (err, response) => {
+  ON photos.property_id = properties.id WHERE properties.id = $1;`, [id], (err, response) => {
     if (err) {
       cb(err);
     } else {
@@ -30,6 +30,30 @@ const getGalleryById = (id, cb) => {
           });
         });
         data.gallery = gallery;
+      }
+      cb(null, [data]);
+    }
+  });
+};
+
+const getPropertyById = (id, cb) => {
+  query(`SELECT *
+  FROM properties
+  WHERE id = $1
+  LIMIT 1;`, [id], (err, response) => {
+    if (err) {
+      cb(err);
+    } else {
+      const data = {};
+      if (response.rows.length !== 0) {
+        const record = response.rows[0];
+        data.location = { city: record.city, state: record.stateloc, country: record.country };
+        data._id = record.property_id;
+        data.title = record.title;
+        data.reviews = record.reviews;
+        data.rating = record.rating;
+        data.isSuperhost = record.is_superhost;
+        data.gallery = [];
       }
       cb(null, [data]);
     }
@@ -87,6 +111,7 @@ const updateProperty = (changes, id, cb) => {
 
 module.exports = {
   getGalleryById,
+  getPropertyById,
   addProperty,
   deleteProperty,
   updateProperty,

@@ -11,6 +11,17 @@ const getGalleryById = (req, res) => {
   });
 };
 
+const getPropertyById = (req, res) => {
+  const { id } = req.params;
+  models.getPropertyById(id, (err, docs) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+};
+
 const addProperty = (req, res) => {
   const property = req.body;
   models.addProperty(property, (err, response) => {
@@ -47,6 +58,7 @@ const updateProperty = (req, res) => {
 
 module.exports = {
   getGalleryById,
+  getPropertyById,
   addProperty,
   deleteProperty,
   updateProperty,
