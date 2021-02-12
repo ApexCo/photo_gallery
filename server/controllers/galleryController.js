@@ -6,7 +6,8 @@ const getGalleryById = (req, res) => {
     if (err) {
       res.sendStatus(400);
     } else {
-      res.status(200).send(docs);
+      // res.status(200).send(docs);
+      res.status(200).json(docs);
     }
   });
 };
