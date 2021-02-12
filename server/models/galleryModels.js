@@ -73,15 +73,15 @@ const getPhotoById = (id, cb) => {
   });
 };
 
-const addProperty = (property, cb) => {
-  const keys = Object.keys(property);
+const addItem = (endpoint, item, cb) => {
+  const keys = Object.keys(item);
   const values = [];
   const numberedKeys = keys.map((key, i) => {
-    values.push(property[key]);
+    values.push(item[key]);
     return `$${i + 1}`;
   });
   query(`INSERT INTO
-  properties(${keys.join(', ')})
+  ${endpoint}(${keys.join(', ')})
   VALUES(${numberedKeys.join(', ')})
   returning *`, values, (err, response) => {
     if (err) {
@@ -92,11 +92,10 @@ const addProperty = (property, cb) => {
   });
 };
 
-const deleteProperty = (id, cb) => {
+const deleteItem = (endpoint, id, cb) => {
   query(`DELETE FROM
-  properties WHERE id=$1;`, [id], (err, response) => {
+  ${endpoint} WHERE id=$1;`, [id], (err, response) => {
     if (err) {
-      console.log(err);
       cb(err);
     } else {
       cb(null, response.rows[0]);
@@ -104,13 +103,13 @@ const deleteProperty = (id, cb) => {
   });
 };
 
-const updateProperty = (changes, id, cb) => {
+const updateItem = (endpoint, item, id, cb) => {
   const values = [id];
-  const keys = Object.entries(changes).map((entry, i) => {
+  const keys = Object.entries(item).map((entry, i) => {
     values.push(entry[1]);
     return `${entry[0]} = $${i + 2}`;
   });
-  query(`UPDATE properties SET
+  query(`UPDATE ${endpoint} SET
   ${keys.join(', ')}
   WHERE id = $1
   returning *`, values, (err, response) => {
@@ -125,8 +124,8 @@ const updateProperty = (changes, id, cb) => {
 module.exports = {
   getGalleryById,
   getPropertyById,
-  addProperty,
-  deleteProperty,
-  updateProperty,
   getPhotoById,
+  addItem,
+  deleteItem,
+  updateItem,
 };

@@ -22,42 +22,9 @@ const getPropertyById = (req, res) => {
   });
 };
 
-const addProperty = (req, res) => {
-  const property = req.body;
-  models.addProperty(property, (err, response) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.status(201).json(response);
-    }
-  });
-};
-
-const deleteProperty = (req, res) => {
-  const { id } = req.params;
-  models.deleteProperty(id, (err) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.sendStatus(204);
-    }
-  });
-};
-
-const updateProperty = (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
-  models.updateProperty(changes, id, (err, response) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.status(200).json(response);
-    }
-  });
-};
-
 const getPhotoById = (req, res) => {
   const { id } = req.params;
+  console.log(req);
   models.getPhotoById(id, (err, docs) => {
     if (err) {
       res.sendStatus(400);
@@ -67,12 +34,51 @@ const getPhotoById = (req, res) => {
   });
 };
 
+const addItem = (req, res) => {
+  const item = req.body;
+  let endpoint = req.url.match(/\/api\/(.+)\/|\/api\/(.+)/);
+  endpoint = endpoint[1] || endpoint[2];
+  models.addItem(endpoint, item, (err, response) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(201).json(response);
+    }
+  });
+};
+
+const deleteItem = (req, res) => {
+  const { id } = req.params;
+  let endpoint = req.url.match(/\/api\/(.+)\/|\/api\/(.+)/);
+  endpoint = endpoint[1] || endpoint[2];
+  models.deleteItem(endpoint, id, (err) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  });
+};
+
+const updateItem = (req, res) => {
+  const { id } = req.params;
+  const item = req.body;
+  let endpoint = req.url.match(/\/api\/(.+)\/|\/api\/(.+)/);
+  endpoint = endpoint[1] || endpoint[2];
+  models.updateItem(endpoint, item, id, (err, response) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(response);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
   getPropertyById,
-  addProperty,
-  deleteProperty,
-  updateProperty,
   getPhotoById,
-  addPhoto,
+  addItem,
+  deleteItem,
+  updateItem,
 };
