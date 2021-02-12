@@ -37,6 +37,24 @@ const getGalleryById = (id, cb) => {
   });
 };
 
+const addProperty = (property, cb) => {
+  console.log(property);
+  console.log(Object.values(property));
+  query(`INSERT INTO
+  properties(title, reviews, rating, is_superhost, city, stateloc, country, created_date)
+  VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+  returning *`, Object.values(property), (err, response) => {
+    if (err) {
+      console.log(err);
+      cb(err);
+    } else {
+      console.log(response.rows[0]);
+      cb(null, response.rows[0]);
+    }
+  });
+};
+
 module.exports = {
   getGalleryById,
+  addProperty,
 };

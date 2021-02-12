@@ -6,12 +6,23 @@ const getGalleryById = (req, res) => {
     if (err) {
       res.sendStatus(400);
     } else {
-      // res.status(200).send(docs);
       res.status(200).json(docs);
+    }
+  });
+};
+
+const addProperty = (req, res) => {
+  const property = req.body;
+  models.addProperty(property, (err, response) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.status(201).json(response);
     }
   });
 };
 
 module.exports = {
   getGalleryById,
+  addProperty,
 };
