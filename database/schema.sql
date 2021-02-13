@@ -1,4 +1,9 @@
-CREATE TABLE properties (
+DROP DATABASE IF EXISTS photo_gallery;
+CREATE DATABASE photo_gallery;
+
+\c photo_gallery;
+
+CREATE TABLE IF NOT EXISTS properties (
   id serial,
   title VARCHAR(100) NOT NULL,
   reviews int DEFAULT 0,
@@ -11,7 +16,7 @@ CREATE TABLE properties (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE photos (
+CREATE TABLE IF NOT EXISTS photos (
   id serial,
   property_id int NOT NULL,
   photo_name VARCHAR(100),
@@ -24,7 +29,7 @@ CREATE TABLE photos (
   FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id serial,
   username VARCHAR(30) NOT NULL,
   pw VARCHAR(20) NOT NULL,
@@ -35,7 +40,7 @@ CREATE TABLE users (
   UNIQUE (username)
 );
 
-CREATE TABLE property_lists (
+CREATE TABLE IF NOT EXISTS property_lists (
   id serial,
   user_id int NOT NULL,
   title VARCHAR(60) NOT NULL,
@@ -44,7 +49,7 @@ CREATE TABLE property_lists (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE property_list_properties (
+CREATE TABLE IF NOT EXISTS property_list_properties (
   id serial,
   list_id int NOT NULL,
   property_id int NOT NULL,
